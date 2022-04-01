@@ -1,111 +1,61 @@
-# Celo Progressive Dapp Starter
+# 🏗 Scaffold-ETH
 
-A starter pack to get started with building dapps on Celo.
+> everything you need to build on Ethereum! 🚀
 
-You can view a live version of the template deployed at https://celo-progressive-dapp-starter.netlify.app/.
+🧪 Quickly experiment with Solidity using a frontend that adapts to your smart contract:
 
-This repo is heavily inspired by [scaffold-eth](https://github.com/scaffold-eth/scaffold-eth).
+![image](https://user-images.githubusercontent.com/2653167/124158108-c14ca380-da56-11eb-967e-69cde37ca8eb.png)
 
-Prerequisites:
 
-1. Node (v12), [NVM](https://github.com/nvm-sh/nvm)
-2. Yarn
-3. Git
+# 🏄‍♂️ Quick Start
 
-```shell
-git clone https://github.com/celo-org/celo-progressive-dapp-starter
+Prerequisites: [Node (v16 LTS)](https://nodejs.org/en/download/) plus [Yarn](https://classic.yarnpkg.com/en/docs/install/) and [Git](https://git-scm.com/downloads)
+
+> clone/fork 🏗 scaffold-eth:
+
+```bash
+git clone https://github.com/scaffold-eth/scaffold-eth.git
 ```
 
-## Intro Video
+> install and start your 👷‍ Hardhat chain:
 
-[![Intro Video](https://img.youtube.com/vi/MQg2sta0lr8/0.jpg)](https://youtu.be/MQg2sta0lr8)
-
-## Using the Dapp Starter
-
-### Set the correct node version (several Celo packages require using node version 12.x):
-
-```shell
-cd celo-progressive-dapp-starter
-nvm use # uses node v12 as specified in .nvmrc
-```
-
-### Get testnet funds and install dependencies
-
-```shell
-cd packages/hardhat
+```bash
+cd scaffold-eth
 yarn install
-npx hardhat create-account # prints a private key + account
+yarn chain
 ```
 
-Paste the private key in `packages/hardhat/.env` and fund the account from the faucet [here](https://celo.org/developers/faucet). Once the account is funded, deploy the contracts with:
+> in a second terminal window, start your 📱 frontend:
 
-```shell
+```bash
+cd scaffold-eth
+yarn start
+```
+
+> in a third terminal window, 🛰 deploy your contract:
+
+```bash
+cd scaffold-eth
 yarn deploy
 ```
 
-Read more details about [the hardhat package here](packages/hardhat/README.md).
+🔏 Edit your smart contract `YourContract.sol` in `packages/hardhat/contracts`
 
-### In another terminal, start the frontend (React app using [Next.js](https://nextjs.org/))
+📝 Edit your frontend `App.jsx` in `packages/react-app/src`
 
-```shell
-cd packages/react-app
-yarn install
-yarn dev
-```
+💼 Edit your deployment scripts in `packages/hardhat/deploy`
 
-### Testing on Mobile
+📱 Open http://localhost:3000 to see the app
 
-- Get the Alfajores Testnet mobile wallet for Android and iOS [here](https://celo.org/developers/wallet).
-- Serve your React app to your mobile device for testing via a tunnel.
+# 📚 Documentation
 
-Next.js defaults to serving your app on port 3000, so point the tunnel there:
+Documentation, tutorials, challenges, and many more resources, visit: [docs.scaffoldeth.io](https://docs.scaffoldeth.io)
 
-```shell
-npx localtunnel --port 3000
-```
-
-Read more about localtunnel [here](https://www.npmjs.com/package/localtunnel).
-
-### Review
-
-- Edit smart contracts in `packages/hardhat/contracts`.
-- Edit deployment scripts in `packages/hardhat/deploy`.
-- Edit frontend in `packages/react-app/pages/index.tsx`.
-- Open http://localhost:3000 to see the app.
-
-You can run `yarn deploy --reset` to force re-deploy your contracts to your local development chain.
-
-## Deploy Your DApp
-
-This repo comes with a `netlify.toml` file that makes it easy to deploy your front end using [Netlify](https://www.netlify.com/). The `toml` file contains instructions for Netlify to build and serve the site, so all you need to do is create an account and connect your GitHub repo to Netlify.
-
-## Developing with local devchain
-
-You can [import account account keys](https://metamask.zendesk.com/hc/en-us/articles/360015489331-How-to-import-an-Account) for the local development chain into Metamask. To print the private keys of the local chain accounts `cd /packages/hardhat` and run
-
-```shell
-npx hardhat devchain-keys
-```
-
-If you are working on a local development blockchain, you may see errors about `the tx doesn't have the correct nonce.` This is because wallets often cache the account nonce to reduce the number of RPC calls and can get out of sync when you restart your development chain. You can [reset the account nonce in Metamask](https://metamask.zendesk.com/hc/en-us/articles/360015488891-How-to-reset-your-account) by going to `Settings > Advanced > Reset Account`. This will clear the tx history and force Metamask to query the appropriate nonce from your development chain.
-
-**Note:** You can get a local copy of mainnet by forking with Ganache. Learn more about [forking mainnet with Ganache here.](https://trufflesuite.com/blog/introducing-ganache-7/index.html#1-zero-config-mainnet-forking)
-
-## React library choices
-
-The example UI in `packages/react-app` uses the [Next.js](https://nextjs.org/) React framework, and [use-contractkit](https://www.npmjs.com/package/@celo-tools/use-contractkit) Celo library to get you started with building a responsive, web3 DApp quickly. Feel free to use it as a reference and use whatever web3 packages you are familiar with.
-
-## The Graph
-
-**Using the Graph is not a requirement for building a web3 application. It is more of a convenience for when your application is reading a lot of data from a blockchain.**
-
-I suggest only adding support for the Graph when you need it, avoid premature optimization.
-
-The `/packages/subgraphs` directory includes an example subgraph for reading data from the example `Storage.sol` contract. The Graph is a blockchain data indexing service that makes it easier to read data from EVM blockchains. You can read more about how the Graph works and how to use it in the [README here](/packages/subgraphs/README.md).
-
-## 🔭 Learning Solidity
+# 🔭 Learning Solidity
 
 📕 Read the docs: https://docs.soliditylang.org
+
+📚 Go through each topic from [solidity by example](https://solidity-by-example.org) editing `YourContract.sol` in **🏗 scaffold-eth**
 
 - [Primitive Data Types](https://solidity-by-example.org/primitives/)
 - [Mappings](https://solidity-by-example.org/mapping/)
@@ -116,50 +66,44 @@ The `/packages/subgraphs` directory includes an example subgraph for reading dat
 - [Payable](https://solidity-by-example.org/payable/)
 - [Fallback](https://solidity-by-example.org/fallback/)
 
-📧 Learn the [Solidity globals and units](https://solidity.readthedocs.io/en/v0.6.6/units-and-global-variables.html)
+📧 Learn the [Solidity globals and units](https://docs.soliditylang.org/en/latest/units-and-global-variables.html)
 
-## Support
+# 🛠 Buidl
 
-Join the Celo Discord server at https://chat.celo.org. Reach out on the dedicated repo channel [here](https://discord.com/channels/600834479145353243/941003424298856448).
+Check out all the [active branches](https://github.com/scaffold-eth/scaffold-eth/branches/active), [open issues](https://github.com/scaffold-eth/scaffold-eth/issues), and join/fund the 🏰 [BuidlGuidl](https://BuidlGuidl.com)!
 
-## Contributing
+  
+ - 🚤  [Follow the full Ethereum Speed Run](https://medium.com/@austin_48503/%EF%B8%8Fethereum-dev-speed-run-bd72bcba6a4c)
 
-We welcome contributions to this repository!
 
-If you decide to try this out and find something confusing, consider opening an pull request to make things more clear for the next developer that comes through.
+ - 🎟  [Create your first NFT](https://github.com/scaffold-eth/scaffold-eth/tree/simple-nft-example)
+ - 🥩  [Build a staking smart contract](https://github.com/scaffold-eth/scaffold-eth/tree/challenge-1-decentralized-staking)
+ - 🏵  [Deploy a token and vendor](https://github.com/scaffold-eth/scaffold-eth/tree/challenge-2-token-vendor)
+ - 🎫  [Extend the NFT example to make a "buyer mints" marketplace](https://github.com/scaffold-eth/scaffold-eth/tree/buyer-mints-nft)
+ - 🎲  [Learn about commit/reveal](https://github.com/scaffold-eth/scaffold-eth/tree/commit-reveal-with-frontend)
+ - ✍️  [Learn how ecrecover works](https://github.com/scaffold-eth/scaffold-eth/tree/signature-recover)
+ - 👩‍👩‍👧‍👧  [Build a multi-sig that uses off-chain signatures](https://github.com/scaffold-eth/scaffold-eth/tree/meta-multi-sig)
+ - ⏳  [Extend the multi-sig to stream ETH](https://github.com/scaffold-eth/scaffold-eth/tree/streaming-meta-multi-sig)
+ - ⚖️  [Learn how a simple DEX works](https://medium.com/@austin_48503/%EF%B8%8F-minimum-viable-exchange-d84f30bd0c90)
+ - 🦍  [Ape into learning!](https://github.com/scaffold-eth/scaffold-eth/tree/aave-ape)
 
-If you improve the user interface or create new components that you think might be useful for other developers, consider opening a PR.
+# 💌 P.S.
 
-We will happily compensate you for contributions. Anywhere between 5 and 50 cUSD (or more) depending on the work. This is dependent on the work that is done and is ultimately up to the discretion of the Celo Foundation developer relations team.
+🌍 You need an RPC key for testnets and production deployments, create an [Alchemy](https://www.alchemy.com/) account and replace the value of `ALCHEMY_KEY = xxx` in `packages/react-app/src/constants.js` with your new key.
 
-You can view the associated bounty on Gitcoin [here](https://gitcoin.co/issue/celo-org/celo-progressive-dapp-starter/2/100027610).
+📣 Make sure you update the `InfuraID` before you go to production. Huge thanks to [Infura](https://infura.io/) for our special account that fields 7m req/day!
 
-## How to Contribute a new dApp
+# 🏃💨 Speedrun Ethereum
+Register as a builder [here](https://speedrunethereum.com) and start on some of the challenges and build a portfolio.
 
-As a contributor, you can add your own dApp to this repository and include it as a tab for others to access. Follow the steps below and reference existing files for additional details to help you get started.
+# 💬 Support Chat
 
-- Create a new smart contract in `packages/hardhat/contracts`.
-- Add a new deployment script within `packages/hardhat/deploy/00-deploy.js` using the name of your smart contract.
-- Deploy your Smart Contract from within packages/hardhat using `yarn deploy`
-- Add a new component named `ContractName.tsx` to `packages/react-app/components` to create front end of your dApp.
-- Export component using `packages/react-app/components/index.tsx` using `export * from './ContractName`
-- Import component to `packages/react-app/pages/index.tsx` by adding contract to `import { ContractName } from "@/components";`
-- Add tab within tabs component in `packages/react-app/pages/index.tsx` and replace # with tab number.
+Join the telegram [support chat 💬](https://t.me/joinchat/KByvmRe5wkR-8F_zz6AjpA) to ask questions and find others building with 🏗 scaffold-eth!
 
-```
-<Tab label="Contract Label" {...a11yProps(#)} />
-```
+---
 
-- Add tab panel to page replacing `#` with tab number and `ContractName` with your smart contract name
+🙏 Please check out our [Gitcoin grant](https://gitcoin.co/grants/2851/scaffold-eth) too!
 
-```
-<TabPanel value={value} index={#}>
-    <GreeterContract contractData={contracts?.ContractName} />
-</TabPanel>
-```
+### Automated with Gitpod
 
-You should now be able to view your new dApp from [http://localhost:3000](http://localhost:3000).
-
-## Troubleshooting
-
-For M1 Mac developers who have installed nvm using brew, the server may crash. To resolve this issue, take a look here at this [solution](https://stackoverflow.com/a/67254340)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#github.com/scaffold-eth/scaffold-eth)
