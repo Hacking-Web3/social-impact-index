@@ -7,7 +7,7 @@ function ConnectButton() {
 
   return connection.status === 'connected' ? (
     <div>
-      <UserProfile did={connection.status === 'connected' && connection.selfID.id}/>
+      <UserProfile did={connection.status === 'connected' && connection.selfID.id} selfId={connection.selfID}/>
     <button
       onClick={() => {
         disconnect()
