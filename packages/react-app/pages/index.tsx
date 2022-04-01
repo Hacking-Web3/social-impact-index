@@ -1,9 +1,12 @@
 import * as React from "react";
 import { Tabs, Tab, Typography, Box } from "@mui/material";
+import { Provider } from "@self.id/framework";
+import { useConnection } from '@self.id/framework'
 import deployedContracts from "@celo-progressive-dapp-starter/hardhat/deployments/hardhat_contracts.json";
 import { useContractKit } from "@celo-tools/use-contractkit";
 import { StorageContract, GreeterContract } from "@/components";
 import AppLayout from "@/components/layout/AppLayout";
+import CeramicConnect from "@/components/CeramicConnect";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -19,13 +22,17 @@ export default function App() {
     setValue(newValue);
   };
 
+  const [connection, connect, disconnect] = useConnection()
+
   const contracts =
     deployedContracts[network?.chainId?.toString()]?.[
       network?.name?.toLocaleLowerCase()
     ]?.contracts;
 
   return (
+    <Provider client={{ ceramic: 'testnet-clay' }}>
     <AppLayout title="Celo DApp Starter" description="Celo DApp Starter">
+      <CeramicConnect />
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs">
@@ -40,7 +47,8 @@ export default function App() {
           <GreeterContract contractData={contracts?.Greeter} />
         </TabPanel>
       </Box>
-    </AppLayout>
+  </AppLayout>
+  </Provider>
   );
 }
 
