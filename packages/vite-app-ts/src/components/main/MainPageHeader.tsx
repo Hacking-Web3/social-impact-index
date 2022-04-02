@@ -1,5 +1,5 @@
 import { getNetwork } from '@ethersproject/networks';
-import { Alert, PageHeader } from 'antd';
+import { Alert, Button, PageHeader } from 'antd';
 import { Account } from 'eth-components/ant';
 import { useGasPrice } from 'eth-hooks';
 import { useEthersContext } from 'eth-hooks/context';
@@ -45,15 +45,10 @@ export const MainPageHeader: FC<IMainPageHeaderProps> = (props) => {
    * 👨‍💼 Your account is in the top right with a wallet at connect options
    */
   const right = (
-    <div style={{ position: 'fixed', textAlign: 'right', right: 0, top: 0, padding: 10, zIndex: 1 }}>
-      <Account
-        createLoginConnector={props.scaffoldAppProviders.createLoginConnector}
-        ensProvider={props.scaffoldAppProviders.mainnetAdaptor?.provider}
-        price={props.price}
-        blockExplorer={props.scaffoldAppProviders.targetNetwork.blockExplorer}
-        hasContextConnect={true}
-      />
-      <FaucetHintButton scaffoldAppProviders={props.scaffoldAppProviders} gasPrice={gasPrice} />
+    <div style={{ position: 'fixed', textAlign: 'right', right: "70px", top: "36px", zIndex: 1 }}>
+      <Button type="primary" shape="round" style={{ marginRight: 10 }}>Add SIO</Button>
+      <Button type="primary" shape="round" style={{ marginRight: 10 }}>Create Index</Button>
+      <Button type="primary" shape="round" style={{ marginRight: 10 }}>Connect</Button>
       {props.children}
     </div>
   );
