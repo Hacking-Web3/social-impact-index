@@ -13,6 +13,7 @@ import { getNetworkInfo } from '~~/functions';
 export interface IMainPageHeaderProps {
   scaffoldAppProviders: IScaffoldAppProviders;
   price: number;
+  showSIOPopup: () => void;
 }
 
 /**
@@ -46,7 +47,7 @@ export const MainPageHeader: FC<IMainPageHeaderProps> = (props) => {
    */
   const right = (
     <div style={{ position: 'fixed', textAlign: 'right', right: "70px", top: "36px", zIndex: 1 }}>
-      <Button type="primary" shape="round" style={{ marginRight: 10 }}>Add SIO</Button>
+      <Button type="primary" shape="round" style={{ marginRight: 10 }} onClick={props.showSIOPopup}>Add SIO</Button>
       <Button type="primary" shape="round" style={{ marginRight: 10 }}>Create Index</Button>
       <Button type="primary" shape="round" style={{ marginRight: 10 }}>Connect</Button>
       {props.children}
