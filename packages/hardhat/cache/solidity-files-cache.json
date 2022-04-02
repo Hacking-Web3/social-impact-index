@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/leon/hackathon/celo-hackathon/packages/hardhat/contracts/Collect.sol": {
-      "lastModificationDate": 1648909463410,
-      "contentHash": "1151068349a619a9ca7ef411f4d00509",
+      "lastModificationDate": 1648921043239,
+      "contentHash": "900f6900a20a2b9b2d024e8b57870b9d",
       "sourceName": "contracts/Collect.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -36,11 +36,7 @@
         }
       },
       "imports": [
-        "hardhat/console.sol",
-        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
-        "@openzeppelin/contracts/token/ERC721/IERC721.sol",
-        "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol",
-        "@openzeppelin/contracts/utils/introspection/ERC165.sol"
+        "hardhat/console.sol"
       ],
       "versionPragmas": [
         ">=0.8.0 <0.9.0"
@@ -50,7 +46,7 @@
       ]
     },
     "/Users/leon/hackathon/celo-hackathon/packages/hardhat/node_modules/hardhat/console.sol": {
-      "lastModificationDate": 1648898318590,
+      "lastModificationDate": 1648912129193,
       "contentHash": "cc4777addd464ea56fa35b1c45df0591",
       "sourceName": "hardhat/console.sol",
       "solcConfig": {

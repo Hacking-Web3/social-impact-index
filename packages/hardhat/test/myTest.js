@@ -20,33 +20,6 @@ describe("My Dapp", function () {
     setTimeout(done, 2000);
   });
 
-  /* describe("YourContract", function () {
-    it("Should deploy YourContract", async function () {
-      const YourContract = await ethers.getContractFactory("YourContract");
-
-      myContract = await YourContract.deploy();
-    });
-
-    describe("setPurpose()", function () {
-      it("Should be able to set a new purpose", async function () {
-        const newPurpose = "Test Purpose";
-
-        await myContract.setPurpose(newPurpose);
-        expect(await myContract.purpose()).to.equal(newPurpose);
-      });
-
-      it("Should emit a SetPurpose event ", async function () {
-        const [owner] = await ethers.getSigners();
-
-        const newPurpose = "Another Test Purpose";
-
-        expect(await myContract.setPurpose(newPurpose))
-          .to.emit(myContract, "SetPurpose")
-          .withArgs(owner.address, newPurpose);
-      });
-    });
-  }); */
-
   describe("Collect", function () {
     it("Should deploy Collect", async function () {
       const CollectContract = await ethers.getContractFactory("Collect");
@@ -106,7 +79,7 @@ describe("My Dapp", function () {
         method: 'hardhat_impersonateAccount',
         params: ['0xf60c2Ea62EDBfE808163751DD0d8693DCb30019c'],
       });
-  
+
       const signer = await ethers.getSigner('0xf60c2Ea62EDBfE808163751DD0d8693DCb30019c');
       const impCollectContract = collectContract.connect(signer);
 
@@ -114,37 +87,37 @@ describe("My Dapp", function () {
       const addressTWO = "0x130e7436fa0fb04ebd2568faf2780fcf11774583"
       const addressTHREE = "0xe0af683a87495380a80f91bde8dc4fbed1421357"
 
-      
+
       const emptySIO = await collectContract.getSIO(2);
       expect(emptySIO.ownerAddress).to.equal(constants.ZERO_ADDRESS);
-      
+
       const dataOne = ["ceramicStreamOne", addressONE, true];
       const dataTwo = ["ceramicStreamTwo", addressTWO, false];
       const dataThree = ["ceramicStreamThree", addressTHREE, true];
-      
+
       const indexes = [1, 4, 2]
       const datas = [dataOne, dataTwo, dataThree];
-      
-      
+
+
       const tx = await collectContract.setSIOs(indexes, datas);
       await tx.wait();
-      
+
       const SioONE = await collectContract.getSIO(1);
       const SioTWO = await collectContract.getSIO(4);
       const SioTHREE = await collectContract.getSIO(2);
-      
+
       expect(SioONE.ownerAddress.toLowerCase()).to.equal(addressONE.toLowerCase());
       expect(SioTWO.ownerAddress.toLowerCase()).to.equal(addressTWO);
       expect(SioTHREE.ownerAddress.toLowerCase()).to.equal(addressTHREE);
-      
+
       const newAddress = "0xff4288218F96e5ff1A1F8766ccFC65921DFf86B8"
       const newData = [["newCeramicStream", newAddress, false]];
       const newIndexes = [1];
 
-      
+
       const tx2 = await impCollectContract.setSIOs(newIndexes, newData);
       await tx2.wait();
-      
+
       const newSioONE = await collectContract.getSIO(1);
 
       expect(newSioONE.ownerAddress.toLowerCase()).to.equal(newAddress.toLowerCase());
@@ -158,34 +131,132 @@ describe("My Dapp", function () {
       const addressTWO = "0x130e7436fa0fb04ebd2568faf2780fcf11774583"
       const addressTHREE = "0xe0af683a87495380a80f91bde8dc4fbed1421357"
 
-      
       const emptySIO = await collectContract.getSIO(2);
       expect(emptySIO.ownerAddress).to.equal(constants.ZERO_ADDRESS);
-      
+
       const dataOne = ["ceramicStreamOne", addressONE, true];
       const dataTwo = ["ceramicStreamTwo", addressTWO, false];
       const dataThree = ["ceramicStreamThree", addressTHREE, true];
-      
+
       const indexes = [1, 4, 2]
       const datas = [dataOne, dataTwo, dataThree];
-      
-      
+
       const tx = await collectContract.setSIOs(indexes, datas);
       await tx.wait();
-      
+
       const SioONE = await collectContract.getSIO(1);
       const SioTWO = await collectContract.getSIO(4);
       const SioTHREE = await collectContract.getSIO(2);
-      
+
       expect(SioONE.ownerAddress.toLowerCase()).to.equal(addressONE.toLowerCase());
       expect(SioTWO.ownerAddress.toLowerCase()).to.equal(addressTWO);
       expect(SioTHREE.ownerAddress.toLowerCase()).to.equal(addressTHREE);
-      
+
       const newAddress = "0xff4288218F96e5ff1A1F8766ccFC65921DFf86B8"
       const newData = [["newCeramicStream", newAddress, false]];
       const newIndexes = [1];
 
       await expectRevert(collectContract.setSIOs(newIndexes, newData), "Not the owner or unavailable ID");
+    });
+
+    it("Creation of a new index", async function () {
+      await network.provider.request({
+        method: 'hardhat_reset',
+        params: [
+          {
+            forking: {
+              jsonRpcUrl: 'https://eth-mainnet.alchemyapi.io/v2/LjjqK5PekBuJj8FxfyX2ZZLcU1HYZWvI',
+              blockNumber: 12964900,
+            },
+          },
+        ],
+      });
+
+      const CollectContract = await ethers.getContractFactory("Collect");
+      const collectContract = await CollectContract.deploy();
+
+      await network.provider.request({
+        method: 'hardhat_impersonateAccount',
+        params: ['0xf60c2Ea62EDBfE808163751DD0d8693DCb30019c'],
+      });
+
+      const signer = await ethers.getSigner('0xf60c2Ea62EDBfE808163751DD0d8693DCb30019c');
+      const impCollectContract = collectContract.connect(signer);
+
+      const addressONE = signer.address;
+      const addressTWO = "0x130e7436fa0fb04ebd2568faf2780fcf11774583"
+      const addressTHREE = "0xe0af683a87495380a80f91bde8dc4fbed1421357"
+
+      const dataOne = ["ceramicStreamOne", addressONE, true];
+      const dataTwo = ["ceramicStreamTwo", addressTWO, false];
+      const dataThree = ["ceramicStreamThree", addressTHREE, true];
+
+      const IDs = [1, 4, 2]
+      const datas = [dataOne, dataTwo, dataThree];
+
+
+      const tx = await collectContract.setSIOs(IDs, datas);
+      await tx.wait();
+
+      const indexIDs = [1, 4];
+      const shares = [5000, 5000];
+
+      const tx2 = await impCollectContract.createIndex(indexIDs, shares);
+      tx2.wait();
+
+      const userIndexes = await impCollectContract.getUserIndexes(signer.address);
+
+      const SioONE = await collectContract.getSIO(1);
+
+      expect(userIndexes[0].sios.length).to.equal(2);
+      expect(userIndexes[0].sios[0]).to.equal(1);
+      expect(userIndexes[0].sios[1]).to.equal(4);
+      expect(userIndexes[0].shares[0]).to.equal(5000);
+    });
+
+    it("Creation of a new index with wrong shares", async function () {
+      await network.provider.request({
+        method: 'hardhat_reset',
+        params: [
+          {
+            forking: {
+              jsonRpcUrl: 'https://eth-mainnet.alchemyapi.io/v2/LjjqK5PekBuJj8FxfyX2ZZLcU1HYZWvI',
+              blockNumber: 12964900,
+            },
+          },
+        ],
+      });
+
+      const CollectContract = await ethers.getContractFactory("Collect");
+      const collectContract = await CollectContract.deploy();
+
+      await network.provider.request({
+        method: 'hardhat_impersonateAccount',
+        params: ['0xf60c2Ea62EDBfE808163751DD0d8693DCb30019c'],
+      });
+
+      const signer = await ethers.getSigner('0xf60c2Ea62EDBfE808163751DD0d8693DCb30019c');
+      const impCollectContract = collectContract.connect(signer);
+
+      const addressONE = signer.address;
+      const addressTWO = "0x130e7436fa0fb04ebd2568faf2780fcf11774583"
+      const addressTHREE = "0xe0af683a87495380a80f91bde8dc4fbed1421357"
+
+      const dataOne = ["ceramicStreamOne", addressONE, true];
+      const dataTwo = ["ceramicStreamTwo", addressTWO, false];
+      const dataThree = ["ceramicStreamThree", addressTHREE, true];
+
+      const IDs = [1, 4, 2]
+      const datas = [dataOne, dataTwo, dataThree];
+
+
+      const tx = await collectContract.setSIOs(IDs, datas);
+      await tx.wait();
+
+      const indexIDs = [1, 4];
+      const shares = [5000, 3000];
+
+      await expectRevert(impCollectContract.createIndex(indexIDs, shares), "The repartition of the shares is different than 100%");
     });
 
   });
