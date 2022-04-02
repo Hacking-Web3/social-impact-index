@@ -19,6 +19,7 @@ import { BURNER_FALLBACK_ENABLED, MAINNET_PROVIDER } from '~~/config/appConfig';
 import { useAppContracts, useConnectAppContracts, useLoadAppContracts } from '~~/config/contractContext';
 import { NETWORKS } from '~~/models/constants/networks';
 import ConnectCeramic from "~~/components/ConnectCeramic";
+import { AddSIOModal } from '~~/components/main/AddSIOModal';
 
 /**
  * ⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️
@@ -100,9 +101,11 @@ export const Main: FC = () => {
     setRoute(window.location.pathname);
   }, [setRoute]);
 
+  const [isAddSIOModalVisible, setIsSIOModalVisible] = useState(false);
+
   return (
     <div className="App">
-      <MainPageHeader scaffoldAppProviders={scaffoldAppProviders} price={ethPrice} />
+      <MainPageHeader scaffoldAppProviders={scaffoldAppProviders} price={ethPrice} showSIOPopup={() => {setIsSIOModalVisible(true)}} />
       <ConnectCeramic />
 
       {/* Routes should be added between the <Switch> </Switch> as seen below */}
@@ -147,6 +150,7 @@ export const Main: FC = () => {
         </Switch>
       </BrowserRouter>
 
+      <AddSIOModal visible={isAddSIOModalVisible} onCancel={() => setIsSIOModalVisible(false)}/>
       <MainPageFooter scaffoldAppProviders={scaffoldAppProviders} price={ethPrice} />
     </div>
   );

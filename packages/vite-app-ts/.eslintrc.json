@@ -1,14 +1,14 @@
 {
-  "parser": "@typescript-eslint/parser", // Specifies the ESLint parser
+  "parser": "@typescript-eslint/parser",
   "ignorePatterns": ["**/*.pcss", "**/*.css", "**/*.less", "**/*.json"],
   "parserOptions": {
-    "ecmaVersion": 2020, // Allows for the parsing of modern ECMAScript features
-    "sourceType": "module", // Allows for the use of imports,
+    "ecmaVersion": 2020,
+    "sourceType": "module",
     "ecmaFeatures": {
-      "jsx": true // Allows for the parsing of JSX,
+      "jsx": true
     },
     "project": "tsconfig.json",
-    "tsconfigRootDir": ".",
+    "tsconfigRootDir": "__dirname",
     "projectFolderIgnoreList": [
       "node_modules/*",
       "node_modules",
@@ -70,7 +70,6 @@
       {
         "ts-expect-error": false,
         "ts-ignore": true,
-        "ts-nocheck": false,
         "ts-check": false
       }
     ],
@@ -99,8 +98,8 @@
       "warn",
       {
         "alphabetize": {
-          "order": "asc" /* sort in ascending order. Options: ['ignore', 'asc', 'desc'] */,
-          "caseInsensitive": true /* ignore case. Options: [true, false] */
+          "order": "asc",
+          "caseInsensitive": true
         },
         "newlines-between": "always"
       }
@@ -139,7 +138,7 @@
     "@typescript-eslint/comma-dangle": ["off"],
     "no-use-before-define": "off",
     "spaced-comment": "warn",
-    "max-len": "off",
+    "max-len": ["error", { "code": 80 }],
     "indent": "off",
     "no-console": "off",
     "arrow-body-style": "off",
@@ -160,14 +159,10 @@
   ],
   "settings": {
     "react": {
-      "createClass": "createReactClass", // Regex for Component Factory to use,
-      // default to "createReactClass"
-      "pragma": "React", // Pragma to use, default to "React"
-      "fragment": "Fragment", // Fragment to use (may be a property of <pragma>), default to "Fragment"
-      "version": "detect" // React version. "detect" automatically picks the version you have installed.
-      // You can also use `16."off"`, `16.3`, etc, if you want to override the detected value.
-      // default to latest and warns if missing
-      // It will default to "detect" in the future
+      "createClass": "createReactClass",
+      "pragma": "React",
+      "fragment": "Fragment",
+      "version": "detect"
     }
   },
   "reportUnusedDisableDirectives": true
