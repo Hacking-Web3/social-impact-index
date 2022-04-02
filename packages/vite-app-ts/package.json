@@ -21,9 +21,12 @@
     "dev:unlink": "yalc remove eth-hooks && yalc remove eth-components"
   },
   "dependencies": {
+    "@3id/connect": "^0.2.5",
     "@ant-design/icons": "^4.7.0",
     "@babel/runtime": "^7.17.2",
     "@emotion/react": "^11.8.1",
+    "@ceramicnetwork/3id-did-resolver": "^1.4.16",
+    "@ceramicnetwork/http-client": "^1.5.7",
     "@ethersproject/abi": "^5.5.0",
     "@ethersproject/abstract-provider": "^5.5.1",
     "@ethersproject/address": "^5.5.0",
@@ -107,6 +110,7 @@
     "@web3-react/types": "^6.0.7",
     "autoprefixer": "^10.4.2",
     "cross-env": "^7.0.3",
+    "dids": "^2.4.3",
     "eslint": "^8.9.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^16.1.0",
@@ -122,6 +126,7 @@
     "eslint-plugin-testing-library": "^5.0.5",
     "eslint-plugin-unused-imports": "^2.0.0",
     "husky": "^7.0.4",
+    "key-did-resolver": "^1.4.4",
     "less": "^4.1.2",
     "postcss": "^8.4.6",
     "prettier": "^2.5.1",
