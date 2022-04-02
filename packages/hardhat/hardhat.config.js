@@ -12,6 +12,8 @@ require("hardhat-gas-reporter");
 require("@nomiclabs/hardhat-ethers");
 require("@nomiclabs/hardhat-etherscan");
 
+require("@nomiclabs/hardhat-web3");
+
 const { isAddress, getAddress, formatUnits, parseUnits } = utils;
 
 /*
