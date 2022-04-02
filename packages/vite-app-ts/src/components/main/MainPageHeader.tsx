@@ -34,21 +34,7 @@ export const MainPageHeader: FC<IMainPageHeaderProps> = (props) => {
     <>
       <div>
         <PageHeader
-          title="🏭 Scaffold-Eth"
-          subTitle={
-            <span>
-              v2.1 - [
-              <a href="https://youtu.be/aYMj00JoIug" target="_blank" rel="noreferrer">
-                <span style={{ marginRight: 4 }}>🎥 </span> 8min speed run
-              </a>
-              ] - [
-              <a href="https://trello.com/b/ppbUs796/buidlguidlcom-idea-board" target="_blank" rel="noreferrer">
-                <span style={{ marginRight: 4 }}>💡 </span> trello
-              </a>
-              ]{' '}
-            </span>
-          }
-          style={{ cursor: 'pointer' }}
+          title={<div style={{ fontWeight: 700, lineHeight: "35px" }}><img style={{ display: "inline-block", marginRight: 15 }}src="/logo.svg" /><span style={{verticalAlign: "bottom"}}>SIO Registry</span></div>}
         />
       </div>
       {props.children}
