@@ -2,17 +2,25 @@ const { ethers } = require("hardhat");
 const { use, expect } = require("chai");
 const { solidity } = require("ethereum-waffle");
 
+const {
+  BN,           // Big Number support
+  constants,    // Common constants, like the zero address and largest integers
+  expectEvent,  // Assertions for emitted events
+  expectRevert, // Assertions for transactions that should fail
+} = require('@openzeppelin/test-helpers');
+const { tryCatch } = require("ramda");
+
 use(solidity);
 
 describe("My Dapp", function () {
-  let myContract;
+  //let myContract;
 
   // quick fix to let gas reporter fetch data from gas station & coinmarketcap
   before((done) => {
     setTimeout(done, 2000);
   });
 
-  describe("YourContract", function () {
+  /* describe("YourContract", function () {
     it("Should deploy YourContract", async function () {
       const YourContract = await ethers.getContractFactory("YourContract");
 
@@ -37,5 +45,148 @@ describe("My Dapp", function () {
           .withArgs(owner.address, newPurpose);
       });
     });
+  }); */
+
+  describe("Collect", function () {
+    it("Should deploy Collect", async function () {
+      const CollectContract = await ethers.getContractFactory("Collect");
+
+      collectContract = await CollectContract.deploy();
+    });
+
+    it("Should add new organizations to the contract", async function () {
+      const CollectContract = await ethers.getContractFactory("Collect");
+      const collectContract = await CollectContract.deploy();
+
+      const addressONE = "0xc602dc3fb4a966cd6aed233db2ae4a5e596fcc27"
+      const addressTWO = "0x130e7436fa0fb04ebd2568faf2780fcf11774583"
+      const addressTHREE = "0xe0af683a87495380a80f91bde8dc4fbed1421357"
+
+      const emptySIO = await collectContract.getSIO(2);
+
+      expect(emptySIO.ownerAddress).to.equal(constants.ZERO_ADDRESS);
+
+      const dataOne = ["ceramicStreamOne", addressONE, true];
+      const dataTwo = ["ceramicStreamTwo", addressTWO, false];
+      const dataThree = ["ceramicStreamThree", addressTHREE, true];
+
+      const indexes = [1, 4, 2]
+      const datas = [dataOne, dataTwo, dataThree];
+
+      const tx = await collectContract.setSIOs(indexes, datas);
+      await tx.wait();
+
+
+      const SioONE = await collectContract.getSIO(1);
+      const SioTWO = await collectContract.getSIO(4);
+      const SioTHREE = await collectContract.getSIO(2);
+
+      expect(SioONE.ownerAddress.toLowerCase()).to.equal(addressONE);
+      expect(SioTWO.ownerAddress.toLowerCase()).to.equal(addressTWO);
+      expect(SioTHREE.ownerAddress.toLowerCase()).to.equal(addressTHREE);
+    });
+
+    it("Change infos with right address", async function () {
+      await network.provider.request({
+        method: 'hardhat_reset',
+        params: [
+          {
+            forking: {
+              jsonRpcUrl: 'https://eth-mainnet.alchemyapi.io/v2/LjjqK5PekBuJj8FxfyX2ZZLcU1HYZWvI',
+              blockNumber: 12964900,
+            },
+          },
+        ],
+      });
+
+      const CollectContract = await ethers.getContractFactory("Collect");
+      const collectContract = await CollectContract.deploy();
+
+      await network.provider.request({
+        method: 'hardhat_impersonateAccount',
+        params: ['0xf60c2Ea62EDBfE808163751DD0d8693DCb30019c'],
+      });
+  
+      const signer = await ethers.getSigner('0xf60c2Ea62EDBfE808163751DD0d8693DCb30019c');
+      const impCollectContract = collectContract.connect(signer);
+
+      const addressONE = signer.address;
+      const addressTWO = "0x130e7436fa0fb04ebd2568faf2780fcf11774583"
+      const addressTHREE = "0xe0af683a87495380a80f91bde8dc4fbed1421357"
+
+      
+      const emptySIO = await collectContract.getSIO(2);
+      expect(emptySIO.ownerAddress).to.equal(constants.ZERO_ADDRESS);
+      
+      const dataOne = ["ceramicStreamOne", addressONE, true];
+      const dataTwo = ["ceramicStreamTwo", addressTWO, false];
+      const dataThree = ["ceramicStreamThree", addressTHREE, true];
+      
+      const indexes = [1, 4, 2]
+      const datas = [dataOne, dataTwo, dataThree];
+      
+      
+      const tx = await collectContract.setSIOs(indexes, datas);
+      await tx.wait();
+      
+      const SioONE = await collectContract.getSIO(1);
+      const SioTWO = await collectContract.getSIO(4);
+      const SioTHREE = await collectContract.getSIO(2);
+      
+      expect(SioONE.ownerAddress.toLowerCase()).to.equal(addressONE.toLowerCase());
+      expect(SioTWO.ownerAddress.toLowerCase()).to.equal(addressTWO);
+      expect(SioTHREE.ownerAddress.toLowerCase()).to.equal(addressTHREE);
+      
+      const newAddress = "0xff4288218F96e5ff1A1F8766ccFC65921DFf86B8"
+      const newData = [["newCeramicStream", newAddress, false]];
+      const newIndexes = [1];
+
+      
+      const tx2 = await impCollectContract.setSIOs(newIndexes, newData);
+      await tx2.wait();
+      
+      const newSioONE = await collectContract.getSIO(1);
+
+      expect(newSioONE.ownerAddress.toLowerCase()).to.equal(newAddress.toLowerCase());
+    });
+
+    it("Change infos with wrong address", async function () {
+      const CollectContract = await ethers.getContractFactory("Collect");
+      const collectContract = await CollectContract.deploy();
+
+      const addressONE = "0xc602dc3fb4a966cd6aed233db2ae4a5e596fcc27";
+      const addressTWO = "0x130e7436fa0fb04ebd2568faf2780fcf11774583"
+      const addressTHREE = "0xe0af683a87495380a80f91bde8dc4fbed1421357"
+
+      
+      const emptySIO = await collectContract.getSIO(2);
+      expect(emptySIO.ownerAddress).to.equal(constants.ZERO_ADDRESS);
+      
+      const dataOne = ["ceramicStreamOne", addressONE, true];
+      const dataTwo = ["ceramicStreamTwo", addressTWO, false];
+      const dataThree = ["ceramicStreamThree", addressTHREE, true];
+      
+      const indexes = [1, 4, 2]
+      const datas = [dataOne, dataTwo, dataThree];
+      
+      
+      const tx = await collectContract.setSIOs(indexes, datas);
+      await tx.wait();
+      
+      const SioONE = await collectContract.getSIO(1);
+      const SioTWO = await collectContract.getSIO(4);
+      const SioTHREE = await collectContract.getSIO(2);
+      
+      expect(SioONE.ownerAddress.toLowerCase()).to.equal(addressONE.toLowerCase());
+      expect(SioTWO.ownerAddress.toLowerCase()).to.equal(addressTWO);
+      expect(SioTHREE.ownerAddress.toLowerCase()).to.equal(addressTHREE);
+      
+      const newAddress = "0xff4288218F96e5ff1A1F8766ccFC65921DFf86B8"
+      const newData = [["newCeramicStream", newAddress, false]];
+      const newIndexes = [1];
+
+      await expectRevert(collectContract.setSIOs(newIndexes, newData), "Not the owner or unavailable ID");
+    });
+
   });
 });
