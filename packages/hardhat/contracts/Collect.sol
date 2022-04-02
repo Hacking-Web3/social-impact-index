@@ -8,7 +8,7 @@ import "hardhat/console.sol";
 
 contract Collect {
     event SetIOs(address sender, uint256[] IDs, SioData[] data);
-    event CreationOfIndex(address sender, uint256[] IDs, uint256[] shares);
+    event CreationOfIndex(address sender, uint256[] IDs, uint256[] shares, uint insertPosition);
 
     struct SioData {
         string ceramicStream;
@@ -78,7 +78,7 @@ contract Collect {
         newIndex.sios = IDs;
 
         Indexes[msg.sender].push(newIndex);
-        emit CreationOfIndex(msg.sender, IDs, shares);
+        emit CreationOfIndex(msg.sender, IDs, shares, Indexes[msg.sender].length - 1);
     }
 
     function getUserIndexes(address addr) public view returns (Index[] memory) {
