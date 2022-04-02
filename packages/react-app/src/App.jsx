@@ -31,6 +31,7 @@ import deployedContracts from "./contracts/hardhat_contracts.json";
 import { Transactor, Web3ModalSetup } from "./helpers";
 import { Home, ExampleUI, Hints, Subgraph } from "./views";
 import { useStaticJsonRPC } from "./hooks";
+import ConnectCeramic from "./components/ConnectCeramic";
 
 const { ethers } = require("ethers");
 /*
@@ -354,6 +355,8 @@ function App(props) {
       </Switch>
 
       <ThemeSwitch />
+
+      <ConnectCeramic />
 
       {/* 👨‍💼 Your account is in the top right with a wallet at connect options */}
       <div style={{ position: "fixed", textAlign: "right", right: 0, top: 0, padding: 10 }}>
