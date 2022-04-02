@@ -10,7 +10,7 @@ export function handleSetPurpose(event: SetPurpose): void {
 
   let sender = Sender.load(senderString);
 
-  if (sender === null) {
+  if (sender == null) {
     sender = new Sender(senderString);
     sender.address = event.params.sender;
     sender.createdAt = event.block.timestamp;

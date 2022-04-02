@@ -2,26 +2,34 @@ pragma solidity >=0.8.0 <0.9.0;
 //SPDX-License-Identifier: MIT
 
 import "hardhat/console.sol";
-// import "@openzeppelin/contracts/access/Ownable.sol"; 
-// https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol
+
+//import "@openzeppelin/contracts/access/Ownable.sol"; //https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol
 
 contract YourContract {
-
-  event SetPurpose(address sender, string purpose);
-
   string public purpose = "Building Unstoppable Apps!!!";
 
-  constructor() payable {
+  // this is an error handler
+  //error EmptyPurposeError(uint code, string message);
+
+  constructor() {
     // what should we do on deploy?
   }
 
-  function setPurpose(string memory newPurpose) public {
-      purpose = newPurpose;
-      console.log(msg.sender,"set purpose to",purpose);
-      emit SetPurpose(msg.sender, purpose);
-  }
+  // this is an event for the function below
+  event SetPurpose(address sender, string purpose);
 
-  // to support receiving ETH by default
-  receive() external payable {}
-  fallback() external payable {}
+  function setPurpose(string memory newPurpose) public {
+    // you can add error handling!
+
+    // if(bytes(newPurpose).length == 0){
+    //     revert EmptyPurposeError({
+    //         code: 1,
+    //         message: "Purpose can not be empty"
+    //     });
+    // }
+
+    purpose = newPurpose;
+    console.log(msg.sender, "set purpose to", purpose);
+    emit SetPurpose(msg.sender, purpose);
+  }
 }
