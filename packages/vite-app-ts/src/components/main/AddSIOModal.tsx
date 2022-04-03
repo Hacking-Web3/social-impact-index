@@ -65,6 +65,12 @@ export const AddSIOModal:FC<IAddSIOModalProps> = (props) => {
         name="wallet-address"
         rules={[{ required: true, message: 'Please enter wallet address' }]}
       >
+        <Form.Item
+        name="Legal address"
+        label="legal-address"
+        rules={[{ required: true, message: 'Please enter legal address' }]}
+      >
+      </Form.Item>
         <Input placeholder="0x00..." />
       </Form.Item>
       <Form.Item
