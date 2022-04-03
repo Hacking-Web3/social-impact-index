@@ -18,9 +18,18 @@
       "type": "string",
       "maxLength": 140
     },
-    "website": {
+    "walletAddress": {
       "type": "string",
-      "maxLength": 140
+      "maxLength": 42
+    },
+    "website": {
+      "type": "string"
+    },
+    "twitter": {
+      "type": "string"
+    },
+    "instagram": {
+      "type": "string"
     }
   },
   "definitions": {
@@ -28,6 +37,10 @@
       "type": "string",
       "pattern": "^ipfs://.+",
       "maxLength": 150
+    },
+    "positiveInteger": {
+      "type": "integer",
+      "minimum": 1
     },
     "imageMetadata": {
       "type": "object",
