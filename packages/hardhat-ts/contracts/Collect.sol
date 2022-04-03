@@ -82,7 +82,7 @@ contract Collect {
     Index memory index;
     uint256 amountToSend;
 
-    require(Indexes[creator].length != 0, "Index doesn't exist");
+    require(Indexes[creator].length != 0 && indexPos < Indexes[creator].length, "Index doesn't exist");
     index = Indexes[creator][indexPos];
 
     for (uint256 i = 0; i < index.sios.length; i++) {
@@ -90,7 +90,7 @@ contract Collect {
       amountToSend = (index.shares[i] * total) / 10000;
       (bool sent, ) = SIOData[index.sios[i]].ownerAddress.call{ value: amountToSend }("");
       require(sent, "Failed to send Ether");
-      emit Donate(indexPos, amountToSend);
+      emit Donate(index.sios[i], amountToSend);
     }
     totalDonation += msg.value;
   }
