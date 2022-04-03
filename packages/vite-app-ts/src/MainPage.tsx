@@ -104,9 +104,7 @@ export const Main: FC = () => {
   }, [setRoute]);
 
   const [isAddSIOModalVisible, setIsSIOModalVisible] = useState(false);
-  const [sios, addSios] = useState([]);
-
-  console.log(sios);
+  const [sios, addSios] = useState(['kjzl6cwe1jw147inns66gt9s27ia8qmwbf4w23nlcgz48wqyvt78jla8k72l32h', 'kjzl6cwe1jw148vc0yqmi9ki6gholyapmycandg27t4fpu0sfnfohjveh7b39vh', 'kjzl6cwe1jw149qip5mdph0uk15xkzxjnu642iw382n99hi3twgzq66vg7zv7ju', 'kjzl6cwe1jw14bg1rvik7vuk3uqqb8vsnck6inisbntrrrc12kb7qgtwmefcop1']);
 
   return (
     <div className="App">
@@ -118,13 +116,12 @@ export const Main: FC = () => {
         <MainPageMenu route={route} setRoute={setRoute} />
         <Switch>
           <Route exact path="/">
-            <MainPageContracts scaffoldAppProviders={scaffoldAppProviders} />
-              <AddSIOModal visible={isAddSIOModalVisible} onCancel={() => setIsSIOModalVisible(false)} onSIOAdded={(element) => { addSios(oldSios => [...oldSios, element]) }}/>
-              <SIOList />
+            <MainPageContracts scaffoldAppProviders={scaffoldAppProviders} isAddSIOModalVisible={isAddSIOModalVisible} setIsSIOModalVisible={setIsSIOModalVisible}/>
+              <SIOList sios={sios} />
           </Route>
           <Route path="/sio/:id">
-              <MainPageContracts scaffoldAppProviders={scaffoldAppProviders} />
-              <SIOModal visible={true} ceramicStream="kjzl6cwe1jw14aqfjplrslxvjfhr84p1prmhay5ctgs09f2a9mu155bdkenf30s" />
+              <MainPageContracts scaffoldAppProviders={scaffoldAppProviders} isAddSIOModalVisible={isAddSIOModalVisible} setIsSIOModalVisible={setIsSIOModalVisible}/>
+              <SIOList sios={sios} />
           </Route>
           {/* you can add routes here like the below examlples */}
           <Route path="/hints">

@@ -12,6 +12,7 @@ export interface IMainPageContractsProps {
 }
 import { AddSIOModal } from '~~/components/main/AddSIOModal';
 import {SIOModal} from './SIOModal';
+import {useParams} from 'react-router-dom';
 
 /**
  * 🎛 this scaffolding is full of commonly used components
@@ -26,6 +27,9 @@ export const MainPageContracts: FC<IMainPageContractsProps> = (props) => {
   const collect = useAppContracts('Collect', ethersContext.chainId);
 
   const [sios, addSios] = useState([]);
+  const { id } = useParams();
+  console.log("iddddddddddddddddddddddddddddddddddddd");
+  console.log(id)
 
   if (ethersContext.account == null) {
     return <></>;
@@ -61,7 +65,7 @@ export const MainPageContracts: FC<IMainPageContractsProps> = (props) => {
       </>
 
       <AddSIOModal visible={props.isAddSIOModalVisible} onCancel={() => props.setIsSIOModalVisible(false)} onSIOAdded={(element) => { addSios(oldSios => [...oldSios, element]) }}/>
-      <SIOModal visible={props.isAddSIOModalVisible} ceramicStream="kjzl6cwe1jw147inns66gt9s27ia8qmwbf4w23nlcgz48wqyvt78jla8k72l32h" />
+      <SIOModal visible={id} ceramicStream={id} />
     </>
   );
 };
