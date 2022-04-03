@@ -45,3 +45,69 @@ The test will deploy automatically and you should see the transactions happening
 ## More information!
 
 - run all test with yarn test
+
+
+## Mockups Time !! 📲
+
+- Find below different mockups of the mobile and desktop platform
+
+1. Welcoming page
+
+On the first page when you open the App you will be proposed the new SIOs recently created as well as a search bar to search the SIO you want to find by it's name.
+You can also find the same things with the INDEXES that users have created !
+
+![Welcoming Page](/mockups/Capture%20d%E2%80%99%C3%A9cran%202022-04-03%20%C3%A0%2010.25.46.png?raw=true "Welcoming Page")
+![Welcoming Page bottom](/mockups/Capture%20d%E2%80%99%C3%A9cran%202022-04-03%20%C3%A0%2010.25.55.png?raw=true "Welcoming Page bottom")
+
+
+2. Menu 
+
+Here you have the menu section when you click on the three bar at the to right-hand corer.
+You will see with the different elements:
+   - An Add SIO button a new organization you want to support
+   - An Create INDEX button to create an INDEX made of multiple organization
+   - A connect button to connect your wallet
+   - And finally a search bar to find an organization or an INDEX by its name
+
+![Menu Section](/mockups/Capture%20d%E2%80%99%C3%A9cran%202022-04-03%20%C3%A0%2010.25.35.png?raw=true "Menu section")
+
+3. SIOs
+
+When clicking on the a SIO the information about the organization will be displayed as well as a Donate button, to ... you got it ? yeah... make a donation !
+And if you have the rights you will see an edit button in order to update the diffent informations
+
+![SIOs Section](/mockups/Capture%20d%E2%80%99%C3%A9cran%202022-04-03%20%C3%A0%2010.26.08.png?raw=true "SIOs Section")
+![SIOs Section Editable](/mockups/Capture%20d%E2%80%99%C3%A9cran%202022-04-03%20%C3%A0%2010.26.48.png?raw=true "SIOs Section Editable")
+
+4. SIO creation
+
+You can create you own SIOs, here is the interface to do so
+
+![SIO creation](/mockups/Capture%20d%E2%80%99%C3%A9cran%202022-04-03%20%C3%A0%2010.27.56.png?raw=true "SIO creation")
+![SIO creation bottom](/mockups/Capture%20d%E2%80%99%C3%A9cran%202022-04-03%20%C3%A0%2010.28.03.png?raw=true "SIO creation bottom")
+
+5. SIOs edition
+
+As said in the previous point, if you have to right you can modify the information about the SIO.
+![SIO Edit Section](/mockups/Capture%20d%E2%80%99%C3%A9cran%202022-04-03%20%C3%A0%2010.26.59.png?raw=true "SIO Edit Section")
+![SIO Edit Section bottom](/mockups/Capture%20d%E2%80%99%C3%A9cran%202022-04-03%20%C3%A0%2010.27.05.png?raw=true "SIO Edit Section bottom")
+
+6. INDEX
+
+When clicking on an INDEX you will be able to see the address od the INDEX as well as all the different SIOs it's supports and a donate button.
+
+![INDEX section](/mockups/Capture%20d%E2%80%99%C3%A9cran%202022-04-03%20%C3%A0%2010.27.19.png?raw=true "INDEX section")
+
+7. INDEX creation
+
+You can create your own INDEX, here is the interface to do so
+
+![INDEX creation](/mockups/Capture%20d%E2%80%99%C3%A9cran%202022-04-03%20%C3%A0%2010.28.20.png?raw=true "INDEX creation")
+![INDEX creation bottom](/mockups/Capture%20d%E2%80%99%C3%A9cran%202022-04-03%20%C3%A0%2010.28.28.png?raw=true "INDEX creation bottom")
+
+6. INDEX Edition
+
+The same way you can modify the SIO you can modify the INDEXES if you have the rights.
+
+![INDEX edition](/mockups/Capture%20d%E2%80%99%C3%A9cran%202022-04-03%20%C3%A0%2010.27.35.png?raw=true "INDEX edition")
+![INDEX edition bottom](/mockups/Capture%20d%E2%80%99%C3%A9cran%202022-04-03%20%C3%A0%2010.27.44.png?raw=true "INDEX edition bottom")
