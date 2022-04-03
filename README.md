@@ -59,6 +59,11 @@ You can also find the same things with the INDEXES that users have created !
 ![Welcoming Page](/mockups/Capture%20d%E2%80%99%C3%A9cran%202022-04-03%20%C3%A0%2010.25.46.png?raw=true "Welcoming Page")
 ![Welcoming Page bottom](/mockups/Capture%20d%E2%80%99%C3%A9cran%202022-04-03%20%C3%A0%2010.25.55.png?raw=true "Welcoming Page bottom")
 
+1.1 Desktop version
+
+Here is the desktop version of the platform
+
+![Welcoming Page Desktop](/mockups/Capture%20d%E2%80%99%C3%A9cran%202022-04-03%20%C3%A0%2010.29.37.png?raw=true "Welcoming page desktop")]
 
 2. Menu 
 
@@ -78,6 +83,10 @@ And if you have the rights you will see an edit button in order to update the di
 
 ![SIOs Section](/mockups/Capture%20d%E2%80%99%C3%A9cran%202022-04-03%20%C3%A0%2010.26.08.png?raw=true "SIOs Section")
 ![SIOs Section Editable](/mockups/Capture%20d%E2%80%99%C3%A9cran%202022-04-03%20%C3%A0%2010.26.48.png?raw=true "SIOs Section Editable")
+
+3.1 SIO Desktop version
+
+![SIO desktop](/mockups/Capture%20d%E2%80%99%C3%A9cran%202022-04-03%20%C3%A0%2010.29.46.png?raw=true "SIO desktop")
 
 4. SIO creation
 
