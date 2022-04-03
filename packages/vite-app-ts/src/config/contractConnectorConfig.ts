@@ -24,11 +24,6 @@ export const contractConnectorConfig = () => {
   try {
     const result = {
       // 🙋🏽‍♂️ Add your hadrdhat contracts here
-      YourContract: createConnectorForHardhatContract(
-        'YourContract',
-        hardhatContracts.YourContract__factory,
-        hardhatContractsJson
-      ),
 
       Collect: createConnectorForHardhatContract(
         'Collect',

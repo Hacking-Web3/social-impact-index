@@ -14,6 +14,7 @@ import {useAppContracts} from '~~/config/contractContext';
 export interface IAddSIOModalProps {
   visible: boolean;
   onCancel: () => void;
+  onSIOAdded: (streamId: string) => void;
 }
 
 export const AddSIOModal: FC<IAddSIOModalProps> = (props) => {
@@ -32,18 +33,14 @@ export const AddSIOModal: FC<IAddSIOModalProps> = (props) => {
   const collect = useAppContracts('Collect', ethersContext.chainId);
 
   const onFinish = (props): void => {
-    console.log(props);
     props.onCancel();
   };
 
   const onFinishFailed = (props): void => {
-    console.log('failed');
-    console.log(props);
     props.onCancel();
   };
 
   const normFile = (e: any): any => {
-    console.log('Upload event:', e);
     if (Array.isArray(e)) {
       return e;
     }
@@ -93,6 +90,8 @@ export const AddSIOModal: FC<IAddSIOModalProps> = (props) => {
             parseFloat(update.gasPrice) / 1000000000 +
             ' gwei'
         );
+        props.onSIOAdded(tile.id?.toString());
+        props.onCancel();
       }
     });
   }
