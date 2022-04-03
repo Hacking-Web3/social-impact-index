@@ -20,6 +20,8 @@ import { useAppContracts, useConnectAppContracts, useLoadAppContracts } from '~~
 import { NETWORKS } from '~~/models/constants/networks';
 import ConnectCeramic from "~~/components/ConnectCeramic";
 import { AddSIOModal } from '~~/components/main/AddSIOModal';
+import {SIOModal} from './components/main/SIOModal';
+import {SIOList} from './components/main/SIOList';
 
 /**
  * ⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️
@@ -102,6 +104,9 @@ export const Main: FC = () => {
   }, [setRoute]);
 
   const [isAddSIOModalVisible, setIsSIOModalVisible] = useState(false);
+  const [sios, addSios] = useState([]);
+
+  console.log(sios);
 
   return (
     <div className="App">
@@ -114,6 +119,12 @@ export const Main: FC = () => {
         <Switch>
           <Route exact path="/">
             <MainPageContracts scaffoldAppProviders={scaffoldAppProviders} />
+              <AddSIOModal visible={isAddSIOModalVisible} onCancel={() => setIsSIOModalVisible(false)} onSIOAdded={(element) => { addSios(oldSios => [...oldSios, element]) }}/>
+              <SIOList />
+          </Route>
+          <Route path="/sio/:id">
+              <MainPageContracts scaffoldAppProviders={scaffoldAppProviders} />
+              <SIOModal visible={true} ceramicStream="kjzl6cwe1jw14aqfjplrslxvjfhr84p1prmhay5ctgs09f2a9mu155bdkenf30s" />
           </Route>
           {/* you can add routes here like the below examlples */}
           <Route path="/hints">
@@ -150,7 +161,6 @@ export const Main: FC = () => {
         </Switch>
       </BrowserRouter>
 
-      <AddSIOModal visible={isAddSIOModalVisible} onCancel={() => setIsSIOModalVisible(false)}/>
       <MainPageFooter scaffoldAppProviders={scaffoldAppProviders} price={ethPrice} />
     </div>
   );

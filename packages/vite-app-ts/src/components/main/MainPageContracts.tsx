@@ -1,13 +1,17 @@
 import { GenericContract } from 'eth-components/ant/generic-contract';
 import { useEthersContext } from 'eth-hooks/context';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 
 import { IScaffoldAppProviders } from '~~/components/main/hooks/useScaffoldAppProviders';
 import { useAppContracts } from '~~/config/contractContext';
 import { NETWORKS } from '~~/models/constants/networks';
 export interface IMainPageContractsProps {
   scaffoldAppProviders: IScaffoldAppProviders;
+  isAddSIOModalVisible: boolean;
+  setIsSIOModalVisible: (visibility: boolean) => void;
 }
+import { AddSIOModal } from '~~/components/main/AddSIOModal';
+import {SIOModal} from './SIOModal';
 
 /**
  * 🎛 this scaffolding is full of commonly used components
@@ -19,7 +23,9 @@ export interface IMainPageContractsProps {
 export const MainPageContracts: FC<IMainPageContractsProps> = (props) => {
   const ethersContext = useEthersContext();
   const mainnetDai = useAppContracts('DAI', NETWORKS.mainnet.chainId);
-  const yourContract = useAppContracts('YourContract', ethersContext.chainId);
+  const collect = useAppContracts('Collect', ethersContext.chainId);
+
+  const [sios, addSios] = useState([]);
 
   if (ethersContext.account == null) {
     return <></>;
@@ -34,8 +40,8 @@ export const MainPageContracts: FC<IMainPageContractsProps> = (props) => {
           and give you a form to interact with it locally
         ********** */}
         <GenericContract
-          contractName="YourContract"
-          contract={yourContract}
+          contractName="Collect"
+          contract={collect}
           mainnetAdaptor={props.scaffoldAppProviders.mainnetAdaptor}
           blockExplorer={props.scaffoldAppProviders.targetNetwork.blockExplorer}
         />
@@ -53,6 +59,9 @@ export const MainPageContracts: FC<IMainPageContractsProps> = (props) => {
           />
         */}
       </>
+
+      <AddSIOModal visible={props.isAddSIOModalVisible} onCancel={() => props.setIsSIOModalVisible(false)} onSIOAdded={(element) => { addSios(oldSios => [...oldSios, element]) }}/>
+      <SIOModal visible={props.isAddSIOModalVisible} ceramicStream="kjzl6cwe1jw147inns66gt9s27ia8qmwbf4w23nlcgz48wqyvt78jla8k72l32h" />
     </>
   );
 };
