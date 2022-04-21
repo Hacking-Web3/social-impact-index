@@ -12,7 +12,7 @@ const { tryCatch } = require("ramda");
 
 use(solidity);
 
-describe("SIO Registry", function () {
+describe("Profile Registry", function () {
   //let myContract;
 
   // quick fix to let gas reporter fetch data from gas station & coinmarketcap
@@ -20,7 +20,7 @@ describe("SIO Registry", function () {
     setTimeout(done, 2000);
   });
 
-  describe("Collect, Add SIO/Index", function () {
+  describe("Collect, Add Profile/Index", function () {
     it("Should deploy Collect", async function () {
       const CollectContract = await ethers.getContractFactory("Collect");
 
@@ -35,9 +35,9 @@ describe("SIO Registry", function () {
       const addressTWO = "0x130e7436fa0fb04ebd2568faf2780fcf11774583"
       const addressTHREE = "0xe0af683a87495380a80f91bde8dc4fbed1421357"
 
-      const emptySIO = await collectContract.getSIO(2);
+      const emptyProfile = await collectContract.getProfile(2);
 
-      expect(emptySIO.ownerAddress).to.equal(constants.ZERO_ADDRESS);
+      expect(emptyProfile.ownerAddress).to.equal(constants.ZERO_ADDRESS);
 
       const dataOne = ["ceramicStreamOne", addressONE, true];
       const dataTwo = ["ceramicStreamTwo", addressTWO, false];
@@ -46,13 +46,13 @@ describe("SIO Registry", function () {
       const indexes = [1, 4, 2]
       const datas = [dataOne, dataTwo, dataThree];
 
-      const tx = await collectContract.setSIOs(indexes, datas);
+      const tx = await collectContract.addProfile(indexes, datas);
       await tx.wait();
 
 
-      const SioONE = await collectContract.getSIO(1);
-      const SioTWO = await collectContract.getSIO(4);
-      const SioTHREE = await collectContract.getSIO(2);
+      const SioONE = await collectContract.getProfile(1);
+      const SioTWO = await collectContract.getProfile(4);
+      const SioTHREE = await collectContract.getProfile(2);
 
       expect(SioONE.ownerAddress.toLowerCase()).to.equal(addressONE);
       expect(SioTWO.ownerAddress.toLowerCase()).to.equal(addressTWO);
@@ -88,8 +88,8 @@ describe("SIO Registry", function () {
       const addressTHREE = "0xe0af683a87495380a80f91bde8dc4fbed1421357"
 
 
-      const emptySIO = await collectContract.getSIO(2);
-      expect(emptySIO.ownerAddress).to.equal(constants.ZERO_ADDRESS);
+      const emptyProfile = await collectContract.getProfile(2);
+      expect(emptyProfile.ownerAddress).to.equal(constants.ZERO_ADDRESS);
 
       const dataOne = ["ceramicStreamOne", addressONE, true];
       const dataTwo = ["ceramicStreamTwo", addressTWO, false];
@@ -99,12 +99,12 @@ describe("SIO Registry", function () {
       const datas = [dataOne, dataTwo, dataThree];
 
 
-      const tx = await collectContract.setSIOs(indexes, datas);
+      const tx = await collectContract.addProfile(indexes, datas);
       await tx.wait();
 
-      const SioONE = await collectContract.getSIO(1);
-      const SioTWO = await collectContract.getSIO(4);
-      const SioTHREE = await collectContract.getSIO(2);
+      const SioONE = await collectContract.getProfile(1);
+      const SioTWO = await collectContract.getProfile(4);
+      const SioTHREE = await collectContract.getProfile(2);
 
       expect(SioONE.ownerAddress.toLowerCase()).to.equal(addressONE.toLowerCase());
       expect(SioTWO.ownerAddress.toLowerCase()).to.equal(addressTWO);
@@ -115,10 +115,10 @@ describe("SIO Registry", function () {
       const newIndexes = [1];
 
 
-      const tx2 = await impCollectContract.setSIOs(newIndexes, newData);
+      const tx2 = await impCollectContract.addProfile(newIndexes, newData);
       await tx2.wait();
 
-      const newSioONE = await collectContract.getSIO(1);
+      const newSioONE = await collectContract.getProfile(1);
 
       expect(newSioONE.ownerAddress.toLowerCase()).to.equal(newAddress.toLowerCase());
     });
@@ -131,8 +131,8 @@ describe("SIO Registry", function () {
       const addressTWO = "0x130e7436fa0fb04ebd2568faf2780fcf11774583"
       const addressTHREE = "0xe0af683a87495380a80f91bde8dc4fbed1421357"
 
-      const emptySIO = await collectContract.getSIO(2);
-      expect(emptySIO.ownerAddress).to.equal(constants.ZERO_ADDRESS);
+      const emptyProfile = await collectContract.getProfile(2);
+      expect(emptyProfile.ownerAddress).to.equal(constants.ZERO_ADDRESS);
 
       const dataOne = ["ceramicStreamOne", addressONE, true];
       const dataTwo = ["ceramicStreamTwo", addressTWO, false];
@@ -141,12 +141,12 @@ describe("SIO Registry", function () {
       const indexes = [1, 4, 2]
       const datas = [dataOne, dataTwo, dataThree];
 
-      const tx = await collectContract.setSIOs(indexes, datas);
+      const tx = await collectContract.addProfile(indexes, datas);
       await tx.wait();
 
-      const SioONE = await collectContract.getSIO(1);
-      const SioTWO = await collectContract.getSIO(4);
-      const SioTHREE = await collectContract.getSIO(2);
+      const SioONE = await collectContract.getProfile(1);
+      const SioTWO = await collectContract.getProfile(4);
+      const SioTHREE = await collectContract.getProfile(2);
 
       expect(SioONE.ownerAddress.toLowerCase()).to.equal(addressONE.toLowerCase());
       expect(SioTWO.ownerAddress.toLowerCase()).to.equal(addressTWO);
@@ -156,7 +156,7 @@ describe("SIO Registry", function () {
       const newData = [["newCeramicStream", newAddress, false]];
       const newIndexes = [1];
 
-      await expect(collectContract.setSIOs(newIndexes, newData)).to.be.revertedWith("Not the owner or unavailable ID");
+      await expect(collectContract.addProfile(newIndexes, newData)).to.be.revertedWith("Not the owner or unavailable ID");
     });
 
     it("Creation of a new index", async function () {
@@ -195,7 +195,7 @@ describe("SIO Registry", function () {
       const datas = [dataOne, dataTwo, dataThree];
 
 
-      const tx = await collectContract.setSIOs(IDs, datas);
+      const tx = await collectContract.addProfile(IDs, datas);
       await tx.wait();
 
       const indexIDs = [1, 4];
@@ -206,11 +206,11 @@ describe("SIO Registry", function () {
 
       const userIndexes = await impCollectContract.getUserIndexes(signer.address);
 
-      const SioONE = await collectContract.getSIO(1);
+      const SioONE = await collectContract.getProfile(1);
 
-      expect(userIndexes[0].sios.length).to.equal(2);
-      expect(userIndexes[0].sios[0]).to.equal(1);
-      expect(userIndexes[0].sios[1]).to.equal(4);
+      expect(userIndexes[0].profiles.length).to.equal(2);
+      expect(userIndexes[0].profiles[0]).to.equal(1);
+      expect(userIndexes[0].profiles[1]).to.equal(4);
       expect(userIndexes[0].shares[0]).to.equal(5000);
     });
 
@@ -250,7 +250,7 @@ describe("SIO Registry", function () {
       const datas = [dataOne, dataTwo, dataThree];
 
 
-      const tx = await collectContract.setSIOs(IDs, datas);
+      const tx = await collectContract.addProfile(IDs, datas);
       await tx.wait();
 
       const indexIDs = [1, 4];
@@ -261,7 +261,7 @@ describe("SIO Registry", function () {
   });
 
   describe("Collect, donate", function () {
-    it("Donate to SIO", async function () {
+    it("Donate to Profile", async function () {
       await network.provider.request({
         method: 'hardhat_reset',
         params: [
@@ -297,12 +297,12 @@ describe("SIO Registry", function () {
       const datas = [dataOne, dataTwo, dataThree];
 
 
-      const tx = await collectContract.setSIOs(IDs, datas);
+      const tx = await collectContract.addProfile(IDs, datas);
       await tx.wait();
 
       const amountAddrTwoBefore = await collectContract.provider.getBalance(addressTWO);
 
-      const tx2 = await impCollectContract.donateToSIO(4, { value: Math.pow(10, 18).toString() });
+      const tx2 = await impCollectContract.donateToProfile(4, { value: Math.pow(10, 18).toString() });
       tx2.wait();
 
       const amountAddrTwoAfter = await collectContract.provider.getBalance(addressTWO);
@@ -347,7 +347,7 @@ describe("SIO Registry", function () {
       const datas = [dataOne, dataTwo, dataThree, dataFOUR];
 
 
-      const tx = await impCollectContract.setSIOs(IDs, datas);
+      const tx = await impCollectContract.addProfile(IDs, datas);
       await tx.wait();
 
       const indexIDs = [2, 15];
