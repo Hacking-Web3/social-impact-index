@@ -46,7 +46,7 @@ describe("Profile Registry", function () {
       const indexes = [1, 4, 2]
       const datas = [dataOne, dataTwo, dataThree];
 
-      const tx = await collectContract.addProfile(indexes, datas);
+      const tx = await collectContract.addProfiles(indexes, datas);
       await tx.wait();
 
 
@@ -99,7 +99,7 @@ describe("Profile Registry", function () {
       const datas = [dataOne, dataTwo, dataThree];
 
 
-      const tx = await collectContract.addProfile(indexes, datas);
+      const tx = await collectContract.addProfiles(indexes, datas);
       await tx.wait();
 
       const SioONE = await collectContract.getProfile(1);
@@ -115,7 +115,7 @@ describe("Profile Registry", function () {
       const newIndexes = [1];
 
 
-      const tx2 = await impCollectContract.addProfile(newIndexes, newData);
+      const tx2 = await impCollectContract.addProfiles(newIndexes, newData);
       await tx2.wait();
 
       const newSioONE = await collectContract.getProfile(1);
@@ -141,7 +141,7 @@ describe("Profile Registry", function () {
       const indexes = [1, 4, 2]
       const datas = [dataOne, dataTwo, dataThree];
 
-      const tx = await collectContract.addProfile(indexes, datas);
+      const tx = await collectContract.addProfiles(indexes, datas);
       await tx.wait();
 
       const SioONE = await collectContract.getProfile(1);
@@ -156,7 +156,7 @@ describe("Profile Registry", function () {
       const newData = [["newCeramicStream", newAddress, false]];
       const newIndexes = [1];
 
-      await expect(collectContract.addProfile(newIndexes, newData)).to.be.revertedWith("Not the owner or unavailable ID");
+      await expect(collectContract.addProfiles(newIndexes, newData)).to.be.revertedWith("Not the owner or unavailable ID");
     });
 
     it("Creation of a new index", async function () {
@@ -195,7 +195,7 @@ describe("Profile Registry", function () {
       const datas = [dataOne, dataTwo, dataThree];
 
 
-      const tx = await collectContract.addProfile(IDs, datas);
+      const tx = await collectContract.addProfiles(IDs, datas);
       await tx.wait();
 
       const indexIDs = [1, 4];
@@ -250,7 +250,7 @@ describe("Profile Registry", function () {
       const datas = [dataOne, dataTwo, dataThree];
 
 
-      const tx = await collectContract.addProfile(IDs, datas);
+      const tx = await collectContract.addProfiles(IDs, datas);
       await tx.wait();
 
       const indexIDs = [1, 4];
@@ -297,7 +297,7 @@ describe("Profile Registry", function () {
       const datas = [dataOne, dataTwo, dataThree];
 
 
-      const tx = await collectContract.addProfile(IDs, datas);
+      const tx = await collectContract.addProfiles(IDs, datas);
       await tx.wait();
 
       const amountAddrTwoBefore = await collectContract.provider.getBalance(addressTWO);
@@ -347,7 +347,7 @@ describe("Profile Registry", function () {
       const datas = [dataOne, dataTwo, dataThree, dataFOUR];
 
 
-      const tx = await impCollectContract.addProfile(IDs, datas);
+      const tx = await impCollectContract.addProfiles(IDs, datas);
       await tx.wait();
 
       const indexIDs = [2, 15];

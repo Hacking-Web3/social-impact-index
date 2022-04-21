@@ -7,7 +7,7 @@ import "hardhat/console.sol";
 // https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol
 
 contract Collect {
-  event AddProfile(address sender, uint256[] IDs, ProfileData[] data);
+  event AddProfile(address sender, uint256 IDs, ProfileData data);
   event CreationOfIndex(address sender, uint256[] IDs, uint256[] shares, uint256 insertPosition);
   event Donate(uint256 ID, uint256 amount);
 
@@ -31,7 +31,7 @@ contract Collect {
     // what should we do on deploy?
   }
 
-  function addProfile(uint256[] memory IDs, ProfileData[] memory data) public {
+  function addProfiles(uint256[] memory IDs, ProfileData[] memory data) public {
     require(IDs.length == data.length, "Profile IDs and Profile datas have to be the same length");
     for (uint256 i = 0; i < IDs.length; i++) {
       require(Profiles[IDs[i]].ownerAddress == address(0) || Profiles[IDs[i]].ownerAddress == msg.sender, "Not the owner or unavailable ID");
@@ -41,8 +41,8 @@ contract Collect {
       newProfile.ownerAddress = data[i].ownerAddress;
       newProfile.acceptAnonymous = data[i].acceptAnonymous;
       Profiles[IDs[i]] = newProfile;
+      emit AddProfile(msg.sender, IDs[i], data[i]);
     }
-    emit AddProfile(msg.sender, IDs, data);
   }
 
   function getProfile(uint256 Id) public view returns (ProfileData memory) {
