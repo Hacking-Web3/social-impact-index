@@ -10,6 +10,7 @@ contract Collect {
   event AddProfile(address sender, uint256 IDs, ProfileData data);
   event CreationOfIndex(address sender, uint256[] IDs, uint256[] shares, uint256 insertPosition);
   event Donate(uint256 ID, uint256 amount);
+  event UpdateProfile(address sender, uint256 ProfileId, ProfileData data);
 
   struct ProfileData {
     string ceramicStream;
@@ -29,6 +30,16 @@ contract Collect {
 
   constructor() payable {
     // what should we do on deploy?
+  }
+
+  function updateProfile(uint256 indexProfile, string memory newStream, address newAddress, bool newAcceptance) public {
+    require(Profiles[indexProfile].ownerAddress != address(0), "Asked profile doesn't exist");
+    require(Profiles[indexProfile].ownerAddress == msg.sender, "You are not allowed to modify this profile");
+    Profiles[indexProfile].ceramicStream = newStream;
+    Profiles[indexProfile].ownerAddress = newAddress;
+    Profiles[indexProfile].acceptAnonymous = newAcceptance;
+
+    emit UpdateProfile(msg.sender, indexProfile, Profiles[indexProfile]);
   }
 
   function addProfiles(uint256[] memory IDs, ProfileData[] memory data) public {
