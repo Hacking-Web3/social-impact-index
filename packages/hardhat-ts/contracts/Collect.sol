@@ -10,17 +10,20 @@ contract Collect {
   event AddProfile(address sender, uint256 IDs, ProfileData data);
   event CreationOfIndex(address sender, uint256[] IDs, uint256[] shares, uint256 insertPosition);
   event Donate(uint256 ID, uint256 amount);
-  event UpdateProfile(address sender, uint256 ProfileId, ProfileData data);
+  event UpdateProfile(address sender, uint256 profileId, ProfileData data);
+  event UpdateIndex(address sender, uint256 indexId, uint256[] profiles, uint256[] shares);
 
   struct ProfileData {
     string ceramicStream;
     address ownerAddress;
     bool acceptAnonymous;
+    bool exist;
   }
 
   struct Index {
     uint256[] profiles;
     uint256[] shares;
+    bool exist;
   }
 
   mapping(uint256 => ProfileData) Profiles;
@@ -32,7 +35,12 @@ contract Collect {
     // what should we do on deploy?
   }
 
-  function updateProfile(uint256 indexProfile, string memory newStream, address newAddress, bool newAcceptance) public {
+  function updateProfile(
+    uint256 indexProfile,
+    string memory newStream,
+    address newAddress,
+    bool newAcceptance
+  ) public {
     require(Profiles[indexProfile].ownerAddress != address(0), "Asked profile doesn't exist");
     require(Profiles[indexProfile].ownerAddress == msg.sender, "You are not allowed to modify this profile");
     Profiles[indexProfile].ceramicStream = newStream;
@@ -51,6 +59,7 @@ contract Collect {
       newProfile.ceramicStream = data[i].ceramicStream;
       newProfile.ownerAddress = data[i].ownerAddress;
       newProfile.acceptAnonymous = data[i].acceptAnonymous;
+      newProfile.exist = true;
       Profiles[IDs[i]] = newProfile;
       emit AddProfile(msg.sender, IDs[i], data[i]);
     }
@@ -58,6 +67,20 @@ contract Collect {
 
   function getProfile(uint256 Id) public view returns (ProfileData memory) {
     return Profiles[Id];
+  }
+
+  function updateIndex(
+    uint256 indexID,
+    uint256[] memory profilesIds,
+    uint256[] memory shares
+  ) public {
+    require(Indexes[msg.sender][indexID].exist == true, "Asked Index not accessible");
+    require(profilesIds.length == shares.length, "Profile IDs and share not the same length");
+
+    Indexes[msg.sender][indexID].profiles = profilesIds;
+    Indexes[msg.sender][indexID].shares = shares;
+
+    emit UpdateIndex(msg.sender, indexID, profilesIds, shares);
   }
 
   function createIndex(uint256[] memory IDs, uint256[] memory shares) public {
@@ -71,6 +94,7 @@ contract Collect {
     Index memory newIndex;
     newIndex.shares = shares;
     newIndex.profiles = IDs;
+    newIndex.exist = true;
 
     Indexes[msg.sender].push(newIndex);
     emit CreationOfIndex(msg.sender, IDs, shares, Indexes[msg.sender].length - 1);
