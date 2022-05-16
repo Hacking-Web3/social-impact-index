@@ -37,15 +37,13 @@ contract Collect {
 
   function updateProfile(
     uint256 indexProfile,
-    string memory newStream,
-    address newAddress,
-    bool newAcceptance
+    ProfileData memory newData
   ) public {
     require(Profiles[indexProfile].ownerAddress != address(0), "Asked profile doesn't exist");
     require(Profiles[indexProfile].ownerAddress == msg.sender, "You are not allowed to modify this profile");
-    Profiles[indexProfile].ceramicStream = newStream;
-    Profiles[indexProfile].ownerAddress = newAddress;
-    Profiles[indexProfile].acceptAnonymous = newAcceptance;
+    Profiles[indexProfile].ceramicStream = newData.ceramicStream;
+    Profiles[indexProfile].ownerAddress = newData.ownerAddress;
+    Profiles[indexProfile].acceptAnonymous = newData.acceptAnonymous;
 
     emit UpdateProfile(msg.sender, indexProfile, Profiles[indexProfile]);
   }

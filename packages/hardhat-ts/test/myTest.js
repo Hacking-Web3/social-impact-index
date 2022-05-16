@@ -369,4 +369,56 @@ describe("Profile Registry", function () {
       expect(amountAddrFOURAfter).to.above(amountAddrFOURBefore);
     });
   });
+
+  describe("Update", function () {
+    it("Update a profile OK", async function () {
+      await network.provider.request({
+        method: 'hardhat_reset',
+        params: [
+          {
+            forking: {
+              jsonRpcUrl: 'https://eth-mainnet.alchemyapi.io/v2/LjjqK5PekBuJj8FxfyX2ZZLcU1HYZWvI',
+              blockNumber: 12964900,
+            },
+          },
+        ],
+      });
+
+      const CollectContract = await ethers.getContractFactory("Collect");
+      const collectContract = await CollectContract.deploy();
+
+      await network.provider.request({
+        method: 'hardhat_impersonateAccount',
+        params: ['0xc602dc3fb4a966cd6aed233db2ae4a5e596fcc27'],
+      });
+
+      const signer = await ethers.getSigner('0xc602dc3fb4a966cd6aed233db2ae4a5e596fcc27');
+      const impCollectContract = collectContract.connect(signer);
+
+      const firstAddress = "0xc602dc3fb4a966cd6aed233db2ae4a5e596fcc27"
+      const firstData = ["firstCeramicStream", firstAddress, true];
+
+      const newAddress = "0x130e7436fa0fb04ebd2568faf2780fcf11774583"
+      const newData = ["NewCeramicStream", newAddress, false];
+
+      const indexes = [1]
+      const datas = [firstData];
+      
+      const tx = await impCollectContract.addProfiles(indexes, datas);
+      await tx.wait();
+      
+      const firstProfile = await impCollectContract.getProfile(1);
+
+      expect(firstProfile.ownerAddress.toLowerCase()).to.equal(firstAddress);
+
+      const txChangeProfile = await impCollectContract.updateProfile(1, newData);
+      await txChangeProfile.wait();
+
+      const updatedProfile = await impCollectContract.getProfile(1)
+
+      expect(updatedProfile.ownerAddress.toLowerCase()).to.equal(newAddress);
+      expect(updatedProfile.ceramicStream).to.equal("NewCeramicStream");
+      expect(updatedProfile.acceptAnonymous).to.equal(false);
+    });
+  });
 });
