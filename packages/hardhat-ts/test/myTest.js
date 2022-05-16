@@ -420,5 +420,15 @@ describe("Profile Registry", function () {
       expect(updatedProfile.ceramicStream).to.equal("NewCeramicStream");
       expect(updatedProfile.acceptAnonymous).to.equal(false);
     });
+
+    it("Update a profile KO profile doesn't exist", async function () {
+      const CollectContract = await ethers.getContractFactory("Collect");
+      const collectContract = await CollectContract.deploy();
+
+      const newAddress = "0x130e7436fa0fb04ebd2568faf2780fcf11774583"
+      const newData = ["NewCeramicStream", newAddress, false];
+
+      await expect(collectContract.updateProfile(1, newData)).to.be.revertedWith("Asked profile doesn't exist");
+    });
   });
 });
