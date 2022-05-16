@@ -430,5 +430,24 @@ describe("Profile Registry", function () {
 
       await expect(collectContract.updateProfile(1, newData)).to.be.revertedWith("Asked profile doesn't exist");
     });
+
+    it("Update a profile KO not owner: not alowed to modify", async function () {
+      const CollectContract = await ethers.getContractFactory("Collect");
+      const collectContract = await CollectContract.deploy();
+
+      const firstAddress = "0xc602dc3fb4a966cd6aed233db2ae4a5e596fcc27"
+      const firstData = ["firstCeramicStream", firstAddress, true];
+
+      const newAddress = "0x130e7436fa0fb04ebd2568faf2780fcf11774583"
+      const newData = ["NewCeramicStream", newAddress, false];
+
+      const indexes = [1]
+      const datas = [firstData];
+      
+      const tx = await collectContract.addProfiles(indexes, datas);
+      await tx.wait();
+
+      await expect(collectContract.updateProfile(1, newData)).to.be.revertedWith("You are not allowed to modify this profile");
+    });
   });
 });
