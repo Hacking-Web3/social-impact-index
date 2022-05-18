@@ -627,5 +627,59 @@ describe("Profile Registry", function () {
 
       await expect(impCollectContract.updateIndex(0, newProfileIDs, newShares)).to.be.revertedWith("Profile IDs and share not the same length");
     });
+
+    it("Update an index KO IDs or share empty", async function () {
+      await network.provider.request({
+        method: 'hardhat_reset',
+        params: [
+          {
+            forking: {
+              jsonRpcUrl: 'https://eth-mainnet.alchemyapi.io/v2/LjjqK5PekBuJj8FxfyX2ZZLcU1HYZWvI',
+              blockNumber: 12964900,
+            },
+          },
+        ],
+      });
+
+      const CollectContract = await ethers.getContractFactory("Collect");
+      const collectContract = await CollectContract.deploy();
+
+      await network.provider.request({
+        method: 'hardhat_impersonateAccount',
+        params: ['0xf60c2Ea62EDBfE808163751DD0d8693DCb30019c'],
+      });
+
+      const signer = await ethers.getSigner('0xf60c2Ea62EDBfE808163751DD0d8693DCb30019c');
+      const impCollectContract = collectContract.connect(signer);
+
+      const addressA = signer.address;
+      const addressB = "0x130e7436fa0fb04ebd2568faf2780fcf11774583"
+
+      const addressC = "0xe0af683a87495380a80f91bde8dc4fbed1421357"
+      const addressD = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+
+      const dataA = ["ceramicStreamA", addressA, true];
+      const dataB = ["ceramicStreamB", addressB, false];
+
+      const dataC = ["ceramicStreamC", addressC, true];
+      const dataD = ["ceramicStreamD", addressD, false];
+
+      const IDs = [1, 2, 69, 420];
+      const datas= [dataA, dataB, dataC, dataD];
+
+      const txAddProfiles = await collectContract.addProfiles(IDs, datas);
+      await txAddProfiles.wait();
+
+      const profileIDs = [1, 2];
+      const shares = [5000, 5000];
+
+      const newProfileIDs = [];
+      const newShares = [];
+
+      const txCreateIndex = await impCollectContract.createIndex(profileIDs, shares);
+      txCreateIndex.wait();
+
+      await expect(impCollectContract.updateIndex(0, newProfileIDs, newShares)).to.be.revertedWith("Profile IDs and shares repartition can't be empty");
+    });
   });
 });
