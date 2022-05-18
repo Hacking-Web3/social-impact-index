@@ -72,8 +72,9 @@ contract Collect {
     uint256[] memory profilesIds,
     uint256[] memory shares
   ) public {
-    require(Indexes[msg.sender][indexID].exist == true, "Asked Index not accessible");
+    require(indexID >= 0 && indexID < Indexes[msg.sender].length, "Invalid index ID");
     require(profilesIds.length == shares.length, "Profile IDs and share not the same length");
+    require(shares.length > 0, "Profile IDs and shares repartition can't be empty");
 
     Indexes[msg.sender][indexID].profiles = profilesIds;
     Indexes[msg.sender][indexID].shares = shares;
@@ -84,6 +85,8 @@ contract Collect {
   function createIndex(uint256[] memory IDs, uint256[] memory shares) public {
     uint256 shareSum = 0;
     require(IDs.length == shares.length, "Profile IDs and share not the same length");
+    require(shares.length > 0, "Profile IDs and shares repartition can't be empty");
+
     for (uint256 i = 0; i < IDs.length; i++) {
       require(Profiles[IDs[i]].ownerAddress != address(0), "Invalid Profile ID");
       shareSum += shares[i];
