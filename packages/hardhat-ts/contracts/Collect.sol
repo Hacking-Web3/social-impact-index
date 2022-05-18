@@ -53,6 +53,7 @@ contract Collect {
     for (uint256 i = 0; i < IDs.length; i++) {
       require(Profiles[IDs[i]].ownerAddress == address(0) || Profiles[IDs[i]].ownerAddress == msg.sender, "Not the owner or unavailable ID");
       require(data[i].ownerAddress != address(0), "Can't set Profile address to 0");
+
       ProfileData memory newProfile;
       newProfile.ceramicStream = data[i].ceramicStream;
       newProfile.ownerAddress = data[i].ownerAddress;

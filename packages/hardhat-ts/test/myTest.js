@@ -449,5 +449,75 @@ describe("Profile Registry", function () {
 
       await expect(collectContract.updateProfile(1, newData)).to.be.revertedWith("You are not allowed to modify this profile");
     });
+
+    it("Update an index OK", async function () {
+      await network.provider.request({
+        method: 'hardhat_reset',
+        params: [
+          {
+            forking: {
+              jsonRpcUrl: 'https://eth-mainnet.alchemyapi.io/v2/LjjqK5PekBuJj8FxfyX2ZZLcU1HYZWvI',
+              blockNumber: 12964900,
+            },
+          },
+        ],
+      });
+
+      const CollectContract = await ethers.getContractFactory("Collect");
+      const collectContract = await CollectContract.deploy();
+
+      await network.provider.request({
+        method: 'hardhat_impersonateAccount',
+        params: ['0xf60c2Ea62EDBfE808163751DD0d8693DCb30019c'],
+      });
+
+      const signer = await ethers.getSigner('0xf60c2Ea62EDBfE808163751DD0d8693DCb30019c');
+      const impCollectContract = collectContract.connect(signer);
+
+      const addressA = signer.address;
+      const addressB = "0x130e7436fa0fb04ebd2568faf2780fcf11774583"
+
+      const addressC = "0xe0af683a87495380a80f91bde8dc4fbed1421357"
+      const addressD = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+
+      const dataA = ["ceramicStreamA", addressA, true];
+      const dataB = ["ceramicStreamB", addressB, false];
+
+      const dataC = ["ceramicStreamC", addressC, true];
+      const dataD = ["ceramicStreamD", addressD, false];
+
+      const IDs = [1, 2, 69, 420];
+      const datas= [dataA, dataB, dataC, dataD];
+
+      const txAddProfiles = await collectContract.addProfiles(IDs, datas);
+      await txAddProfiles.wait();
+
+      const profileIDs = [1, 2];
+      const shares = [5000, 5000];
+
+      const newProfileIDs = [69, 420];
+      const newShares = [2500, 7500];
+
+      const txCreateIndex = await impCollectContract.createIndex(profileIDs, shares);
+      txCreateIndex.wait();
+
+      const userIndexes = await impCollectContract.getUserIndexes(signer.address);
+
+      expect(userIndexes[0].profiles.length).to.equal(2);
+      expect(userIndexes[0].profiles[0]).to.equal(1);
+      expect(userIndexes[0].profiles[1]).to.equal(2);
+      expect(userIndexes[0].shares[0]).to.equal(5000);
+      
+      const txUpdateIndex = await impCollectContract.updateIndex(0, newProfileIDs, newShares);
+      txUpdateIndex.wait();
+
+      const userIndexesAfterTx = await impCollectContract.getUserIndexes(signer.address);
+
+      expect(userIndexesAfterTx[0].profiles.length).to.equal(2);
+      expect(userIndexesAfterTx[0].profiles[0]).to.equal(69);
+      expect(userIndexesAfterTx[0].profiles[1]).to.equal(420);
+      expect(userIndexesAfterTx[0].shares[0]).to.equal(2500);
+      expect(userIndexesAfterTx[0].shares[1]).to.equal(7500);
+    });
   });
 });
